@@ -48,7 +48,7 @@ export default function Dogs(){
         )
     }
 
-    if(error == ""){
+    if(error !== ""){
         return(
             <div className="container_cards">
                 <h1>{error}</h1>
