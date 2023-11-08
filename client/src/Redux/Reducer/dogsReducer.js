@@ -1,10 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_BY_PAGE } from "../../Utils/constants";
+
 
 const initialState = {
+    listDogsCopy: [],
     listDogs: [],
-    successMsg: "",
-    errorMsg: ""
+    listTemperaments: [],
+    dogDetail: null,
+    currentPage: 1,
+    totalDogs: 0,
+    itemsByPage: ITEMS_BY_PAGE,
+    error: "",
+    success: "" 
 }
 
 export const dogsReducer = createSlice({
@@ -12,16 +20,37 @@ export const dogsReducer = createSlice({
     initialState,
     reducers:{
         gettingListDogs: (state, action) => {
-            console.log("Listado de perritos --> " + action.payload.length);
             state.listDogs = action.payload;
-            console.log("state.listDogs --> " + state.listDogs.length);
-            console.log("state.listDogs[0] --> " + state.listDogs[0]);
+            state.totalDogs = action.payload.length;
+            state.listDogsCopy = action.payload;
+            state.success = "";
+            state.error = "";
+            state.currentPage = 1;
+            state.dogDetail = null
         },
         successMsg: (state, action) => {
-            state.successMsg = action.payload
+            state.success = action.payload
         },
         errorMsg: (state, action) => {
-            state.errorMsg = action.payload
+            state.error = action.payload
+        },
+        setFirstPage: (state, action) => {
+            state.currentPage = 1
+        },
+        setPrevNextPage: (state, action) => {
+            let valor = action.payload;
+
+            if((state.currentPage+valor) < 1){ 
+                valor = 0;
+            };
+            if((state.currentPage+valor) > Math.ceil(state.totalDogs/state.itemsByPage)){
+                valor = 0;
+            };
+
+            state.currentPage = state.currentPage + valor;
+        },
+        setLastPage: (state, action) => {
+            state.currentPage = (state.totalDogs === 0) ? 1 : Math.ceil(state.totalDogs/state.itemsByPage);
         }
     }
 })
@@ -29,7 +58,10 @@ export const dogsReducer = createSlice({
 export const {
     gettingListDogs, 
     successMsg, 
-    errorMsg
+    errorMsg,
+    setFirstPage,
+    setPrevNextPage,
+    setLastPage
 } = dogsReducer.actions;
 
 export default dogsReducer.reducer
