@@ -48,6 +48,51 @@ export const dogsReducer = createSlice({
                 state.error = "NO HAY RESULTADOS";
             }
         },
+        gettingOrderByName: (state, action) => {
+            let errMsg = "NO HAY RESULTADOS";
+
+            if(action.payload === "name_asc"){
+                state.listDogsCopy.sort((a, b) => a.name.localeCompare(b.name));
+                if(state.listDogs.length){
+                    state.listDogs.sort((a, b) => a.name.localeCompare(b.name));
+                    errMsg = "";
+                }
+            }else{
+                state.listDogsCopy.sort((a, b) => b.name.localeCompare(a.name));
+                if(state.listDogs.length){
+                    state.listDogs.sort((a, b) => b.name.localeCompare(a.name));
+                    errMsg = "";
+                }
+            }
+            
+            state.listDogs = state.listDogs;
+            state.listDogsCopy = state.listDogsCopy;
+            state.currentPage = 1;
+            state.error = errMsg;
+        },
+        gettingOrderByWeight: (state, action) => {
+            let err = "NO HAY RESULTADOS";
+
+            if(action.payload === "weight_asc"){
+                state.listDogsCopy.sort((a, b) => Number(a.weight_min) - Number(b.weight_min));
+                if(state.listDogs.length){
+                    state.listDogs.sort((a, b) => Number(a.weight_min) - Number(b.weight_min));
+                    err = "";
+                }
+            }else{
+                state.listDogsCopy.sort((a, b) => Number(b.weight_min) - Number(a.weight_min));
+                if(state.listDogs.length){
+                    state.listDogs.sort((a, b) => Number(b.weight_min) - Number(a.weight_min));
+                    err = "";
+                }
+            }
+
+            state.listDogs = state.listDogs;
+            state.listDogsCopy = state.listDogsCopy;
+            state.currentPage = 1;
+            state.error = err;
+            
+        },
         successMsg: (state, action) => {
             state.success = action.payload
         },
@@ -79,6 +124,8 @@ export const {
     gettingListDogs, 
     gettingListTemperaments,
     gettingFilterByOriginTemperament,
+    gettingOrderByName,
+    gettingOrderByWeight,
     successMsg, 
     errorMsg,
     setFirstPage,
