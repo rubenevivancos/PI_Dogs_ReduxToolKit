@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { gettingListDogs, gettingListTemperaments, gettingFilterByOriginTemperament,
+         gettingOrderByName, gettingOrderByWeight,
          errorMsg, setFirstPage, setPrevNextPage, setLastPage} from "../Reducer/dogsReducer";
 
 
@@ -37,6 +38,14 @@ export const filterByOriginTemperament = (filters)=> (dispatch) => {
     dispatch(gettingFilterByOriginTemperament(filters));
 }
 
+export const orderByName = (order) => (dispatch) => {
+    console.log("orderByName: " + order);
+    dispatch(gettingOrderByName(order));
+}
+  
+export const orderByWeight = (order) => (dispatch) => {
+    dispatch(gettingOrderByWeight(order));
+}
 
 
 export const firstPage =  () => (dispatch) => {

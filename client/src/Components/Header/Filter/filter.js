@@ -14,6 +14,12 @@ export default function Filter() {
         temp: "0",
     };
 
+    const selectedOrigin = (e) => {
+        e.preventDefault()
+        filters.origin = e.target.value;
+        dispatch(filterByOriginTemperament(filters));
+    }
+
     const selectedTemperament = (e) => {
         e.preventDefault()
         filters.temp = e.target.value;
@@ -26,7 +32,7 @@ export default function Filter() {
         <div className="header">
             <div className="header">
                 Creado en:&nbsp;&nbsp;
-                <select name="origin" >
+                <select name="origin" onChange={selectedOrigin} >
                     <option disabled defaultValue>--Seleccione--</option>
                     <option value="0">Todos</option>
                     <option value="false">API</option>
