@@ -1,9 +1,24 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { filterByOriginTemperament } from "../../../Redux/Actions/dogsAction";
 import "./filter.css";
 
 
 export default function Filter() {
+    const dispatch = useDispatch();
+
+    const listTemperaments = useSelector(state => state.dogsReducer.listTemperaments);
+    const filters = {
+        origin: "0",
+        temp: "0",
+    };
+
+    const selectedTemperament = (e) => {
+        e.preventDefault()
+        filters.temp = e.target.value;
+        dispatch(filterByOriginTemperament(filters));
+    }
 
     return(
         <div>
@@ -19,9 +34,14 @@ export default function Filter() {
                 </select>
                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div>Temperamentos:&nbsp;&nbsp;</div>
-                <select name="temperaments" >
+                <select name="temperaments" onChange={selectedTemperament}>
                     <option disabled defaultValue>--Seleccione--</option>
                     <option value="0">Todos</option>
+                    {listTemperaments.map(temperament => {
+                        return (
+                            <option value={temperament.name} key={temperament.id} >{temperament.name}</option>
+                        )
+                    })}
                 </select>
             </div>
         </div>
