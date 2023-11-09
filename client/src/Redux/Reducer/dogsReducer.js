@@ -28,6 +28,26 @@ export const dogsReducer = createSlice({
             state.currentPage = 1;
             state.dogDetail = null
         },
+        gettingListTemperaments: (state, action) => {
+            state.listTemperaments = action.payload;
+        },
+        gettingFilterByOriginTemperament: (state, action) => {
+            let listDogs = state.listDogsCopy;
+            const filters = action.payload;
+
+            let listDogsFilter = filters.origin === "0" ? listDogs : listDogs.filter(e => e.creadoEnDB.toString() === filters.origin);
+            listDogsFilter = filters.temp === "0" ? listDogsFilter : listDogsFilter.filter(e => e.temperament.includes(filters.temp));
+
+            if(listDogsFilter.length){
+                state.listDogs = listDogsFilter;
+                state.currentPage = 1;
+                state.totalDogs = listDogsFilter.length;
+                state.error = "";
+            }else{
+                state.listDogs = listDogsFilter;
+                state.error = "NO HAY RESULTADOS";
+            }
+        },
         successMsg: (state, action) => {
             state.success = action.payload
         },
@@ -57,6 +77,8 @@ export const dogsReducer = createSlice({
 
 export const {
     gettingListDogs, 
+    gettingListTemperaments,
+    gettingFilterByOriginTemperament,
     successMsg, 
     errorMsg,
     setFirstPage,
