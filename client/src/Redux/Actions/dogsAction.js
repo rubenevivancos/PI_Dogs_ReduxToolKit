@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { gettingListDogs, gettingListTemperaments, gettingFilterByOriginTemperament,
-         gettingOrderByName, gettingOrderByWeight,
+         gettingOrderByName, gettingOrderByWeight, gettingByName,
          errorMsg, setFirstPage, setPrevNextPage, setLastPage} from "../Reducer/dogsReducer";
 
 
@@ -47,6 +47,23 @@ export const orderByWeight = (order) => (dispatch) => {
     dispatch(gettingOrderByWeight(order));
 }
 
+export const getByName = (name) => async (dispatch) => {
+    try {
+        console.log("Se busca: " + name);
+        var response = (await axios.get(`http://localhost:3001/dogs/getByName?name=${name}`)).data;
+        console.log("[ src/Store/Actions/index.js/getByName(name) ] La busqueda por nombre de: " + name + " encontro " + response.length + " resultados"); 
+        dispatch(gettingByName(response));
+
+    } catch (error) {
+        console.log("[ getByName(name) ] Excepcion: error.message: " + error.message);
+        if(error.message === "Request failed with status code 422"){
+            dispatch(gettingByName([]));
+        }else{
+            dispatch(gettingByName("Ocurrio un error...intentelo mas tarde"));
+        }
+    }
+}
+
 
 export const firstPage =  () => (dispatch) => {
     dispatch(setFirstPage());
@@ -55,7 +72,6 @@ export const firstPage =  () => (dispatch) => {
 export const prevNextPage =  (valor) => (dispatch) => {
     dispatch(setPrevNextPage(valor));
 }
-
 
 export const lastPage =  () => (dispatch) => {
     dispatch(setLastPage());
