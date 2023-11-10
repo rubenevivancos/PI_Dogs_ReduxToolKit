@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { gettingListDogs, gettingListTemperaments, gettingFilterByOriginTemperament,
-         gettingOrderByName, gettingOrderByWeight, gettingByName,
+         gettingOrderByName, gettingOrderByWeight, gettingByName, gettingDogDetail,
          errorMsg, setFirstPage, setPrevNextPage, setLastPage} from "../Reducer/dogsReducer";
 
 
@@ -59,11 +59,29 @@ export const getByName = (name) => async (dispatch) => {
         if(error.message === "Request failed with status code 422"){
             dispatch(gettingByName([]));
         }else{
-            dispatch(gettingByName("Ocurrio un error...intentelo mas tarde"));
+            dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
         }
     }
 }
 
+export const getDogDetail = (id) => async (dispatch) => {
+    try {
+        console.log("getDogDetail(id): INICIO");
+        var response = (await axios.get("http://localhost:3001/dogs/"+id)).data;
+        console.log("getDogDetail(id): Se recibio respuesta del backend");
+        console.log("getDogDetail(id): response: " + response);
+
+        dispatch(gettingDogDetail(response));
+
+    } catch (error) {
+        console.log("[ getDogDetail(id) ] Excepcion: error.message: " + error.message);
+        if(error.message === "Request failed with status code 422"){
+            dispatch(gettingDogDetail(null));
+        }else{
+            dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
+        }
+    }
+};
 
 export const firstPage =  () => (dispatch) => {
     dispatch(setFirstPage());
