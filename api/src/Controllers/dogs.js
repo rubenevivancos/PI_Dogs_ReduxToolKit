@@ -213,26 +213,6 @@ async function getByName(req, res){
 
 async function getDetail(req, res){
     console.log("[ src/routes/dogs.js/:idRaza ] INICIO");
-    const { idRaza } = req.query;
-    const listDogs = await getListDogs();
-
-    if (idRaza) {
-        console.log("[ src/routes/dogs.js/:idRaza ] El id a buscar es: " + idRaza);
-        const dog = listDogs.filter(d => d.id == idRaza);
-        if(dog.length){
-            console.log("[ src/routes/dogs.js/:idRaza ] Se encontro el detalle del perro");
-            console.log("[ src/routes/dogs.js/:idRaza ] El perro es: " + dog[0].name);
-            return res.status(200).json(dog[0]);
-        }
-        console.log("[ src/routes/dogs.js/:idRaza ] No hay resultados");
-        return res.status(422).json({message: "No hay resultados"}); 
-    }
-
-    return res.status(400).json({message: "Falta enviar datos obligatorios"});
-}
-/*
-async function getDetail(req, res){
-    console.log("[ src/routes/dogs.js/:idRaza ] INICIO");
     const { idRaza } = req.params;
     const listDogs = await getListDogs();
 
@@ -249,7 +229,7 @@ async function getDetail(req, res){
     }
 
     return res.status(400).json({message: "Falta enviar datos obligatorios"});
-}*/
+}
 
 
 module.exports ={

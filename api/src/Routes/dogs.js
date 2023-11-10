@@ -15,8 +15,7 @@ router.post('/createDog', createDog);
 
 router.get("/getByName", getByName);
 
-router.get("/getDetail", getDetail);
-//router.get("/:idRaza", getDetail);
+router.get("/:idRaza", getDetail);
 
 
 
