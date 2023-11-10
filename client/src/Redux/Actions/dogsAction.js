@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { gettingListDogs, gettingListTemperaments, gettingFilterByOriginTemperament,
-         gettingOrderByName, gettingOrderByWeight, gettingByName, gettingDogDetail,
+         gettingOrderByName, gettingOrderByWeight, gettingByName, gettingDogDetail, creatingDog,
          errorMsg, setFirstPage, setPrevNextPage, setLastPage} from "../Reducer/dogsReducer";
 
 
@@ -81,7 +81,23 @@ export const getDogDetail = (id) => async (dispatch) => {
             dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
         }
     }
-};
+}
+
+export const createDog = (dog) => async (dispatch) => {
+    let response = null;
+    try{
+        response = (await axios.post("http://localhost:3001/dogs/createDog", dog)).data;
+        
+        dispatch(creatingDog(response));
+    }catch(error){
+        console.log("[ createDog ] Excepcion: error.message: " + error.message);
+        if(error.message === "Request failed with status code 422"){
+            dispatch(errorMsg("Faltan enviar datos obligatorios"));
+        }else{
+            dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
+        }
+    }    
+}
 
 export const firstPage =  () => (dispatch) => {
     dispatch(setFirstPage());

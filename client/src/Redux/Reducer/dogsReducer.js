@@ -112,6 +112,9 @@ export const dogsReducer = createSlice({
                 state.error = "NO HAY RESULTADOS";
             }   
         },
+        creatingDog: (state, action) => {
+            state.success = action.payload;
+        },
         successMsg: (state, action) => {
             state.success = action.payload
         },
@@ -147,6 +150,7 @@ export const {
     gettingOrderByWeight,
     gettingByName,
     gettingDogDetail,
+    creatingDog,
     successMsg, 
     errorMsg,
     setFirstPage,
