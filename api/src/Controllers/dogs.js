@@ -1,6 +1,5 @@
 const axios = require("axios");
 const { Dog, Temperament } = require("../db");
-const { IMAGE_URL, IMAGE_TYPE } = process.env;
 
 
 
@@ -93,7 +92,7 @@ async function getListDogsAPI() {
 
             return{
                 id: dog.id,
-                image: `${IMAGE_URL}` + dog.reference_image_id + `${IMAGE_TYPE}`,
+                image: "https://cdn2.thedogapi.com/images/" + dog.reference_image_id + ".jpg",
                 name: dog.name,
                 weight_min: weightMin,
                 weight_max: weightMax,
