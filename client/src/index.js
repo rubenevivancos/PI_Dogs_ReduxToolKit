@@ -10,7 +10,6 @@ import App from './App';
 axios.defaults.baseURL='https://pidogs2-0backend.vercel.app';
 
 
-
 // Crea un root utilizando createRoot
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
