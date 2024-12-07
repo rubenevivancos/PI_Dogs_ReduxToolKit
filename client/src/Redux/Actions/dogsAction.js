@@ -8,7 +8,7 @@ import { gettingListDogs, gettingListTemperaments, gettingFilterByOriginTemperam
 
 export const listDogs =  () => async (dispatch) => {
     try{
-        const listDogs = (await axios.get("http://localhost:3001/dogs/listDogs")).data;
+        const listDogs = (await axios.get("/dogs/listDogs")).data;
 
         console.log("Se encontraron " + listDogs.length + " perros");
 
@@ -21,7 +21,7 @@ export const listDogs =  () => async (dispatch) => {
 
 export const listTemperaments =  () => async (dispatch) => {
     try{
-        const listTemperaments = (await axios.get("http://localhost:3001/dogs/listTemperaments")).data;
+        const listTemperaments = (await axios.get("/dogs/listTemperaments")).data;
 
         console.log("Se encontraron " + listTemperaments.length + " temperamentos");
 
@@ -50,7 +50,7 @@ export const orderByWeight = (order) => (dispatch) => {
 export const getByName = (name) => async (dispatch) => {
     try {
         console.log("Se busca: " + name);
-        var response = (await axios.get(`http://localhost:3001/dogs/getByName?name=${name}`)).data;
+        var response = (await axios.get(`/dogs/getByName?name=${name}`)).data;
         console.log("[ src/Store/Actions/index.js/getByName(name) ] La busqueda por nombre de: " + name + " encontro " + response.length + " resultados"); 
         dispatch(gettingByName(response));
 
@@ -67,7 +67,7 @@ export const getByName = (name) => async (dispatch) => {
 export const getDogDetail = (id) => async (dispatch) => {
     try {
         console.log("getDogDetail(id): INICIO");
-        var response = (await axios.get("http://localhost:3001/dogs/"+id)).data;
+        var response = (await axios.get("/dogs/"+id)).data;
         console.log("getDogDetail(id): Se recibio respuesta del backend");
         console.log("getDogDetail(id): response: " + response);
 
@@ -86,7 +86,7 @@ export const getDogDetail = (id) => async (dispatch) => {
 export const createDog = (dog) => async (dispatch) => {
     let response = null;
     try{
-        response = (await axios.post("http://localhost:3001/dogs/createDog", dog)).data;
+        response = (await axios.post("/dogs/createDog", dog)).data;
         
         dispatch(creatingDog(response));
     }catch(error){

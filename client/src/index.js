@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 
 import { store } from "./Redux/Store/store";
 import App from './App';
+
+
+axios.defaults.baseURL='https://pidogs2-0backend.vercel.app';
 
 
 
